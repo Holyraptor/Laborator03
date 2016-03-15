@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class PhoneDialerActivity extends Activity {
@@ -35,7 +36,9 @@ public class PhoneDialerActivity extends Activity {
         ImageButton deleteButton = (ImageButton)findViewById(R.id.imageButton3);
         ImageButton callButton = (ImageButton)findViewById(R.id.imageButton1);
         ImageButton closeButton = (ImageButton)findViewById(R.id.imageButton2);
-
+        
+        ImageButton addContactButton = (ImageButton)findViewById(R.id.imageButton4);
+        
         final TextView phoneText = (TextView)findViewById(R.id.textView2);
         
         oneButton.setOnClickListener(new PhoneListener(oneButton, phoneText));
@@ -88,6 +91,23 @@ public class PhoneDialerActivity extends Activity {
 			finish();
 		}
     	});
+    	
+	addContactButton.setOnClickListener(new View.OnClickListener() {
+			
+        	@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+        		String phoneNr = phoneText.getText().toString();
+        		Intent intent;
+        		if (phoneNr.length() > 0) {
+        			  intent = new Intent("ro.pub.cs.systems.pdsd.lab04.contactsmanager.intent.action.ContactsManagerActivity");
+        			  intent.putExtra("ro.pub.cs.systems.pdsd.lab04.contactsmanager.PHONE_NUMBER_KEY", phoneNr);
+        			  startActivityForResult(intent, 21);
+    			} else {
+    			  Toast.makeText(getApplication(), "Cannot save phone number!", Toast.LENGTH_LONG).show();
+    			}
+			}
+		});
     }
 
 
